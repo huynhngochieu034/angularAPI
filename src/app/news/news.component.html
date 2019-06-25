@@ -1,0 +1,52 @@
+<div class="col-md-12">
+
+  <div id="action">
+    <a flag="info" class="dt-button buttons-colvis btn btn-white btn-primary btn-bold" data-toggle="tooltip"
+      title="Thêm bài viết mới" routerLink="/addnews">
+      <span>
+        <i class="fa fa-plus-circle bigger-110 purple"  style="color:rgb(167, 231, 167)"></i>
+      </span>
+    </a>
+
+    <a id="btnDelete" [class.disabled]="disableDelete" (click)="deleteNew()" type="button" class="btn btn-white btn-primary btn-bold"
+      data-toggle="tooltip" title="Xóa bài viết">
+      <span>
+        <i class="fa fa-trash-alt" style="color:red"></i>
+      </span>
+    </a>
+
+    <!-- <a routerLink="/addnews" class="btn btn-success" ><i class="fas fa-plus"></i></a> -->
+    <!-- <button id="btndelete" class="btn btn-danger" (click)="deleteNew()"><i class="fas fa-trash-alt"></i></button> -->
+  </div>
+  <table class="table table-striped">
+    <thead id="theader">
+      <tr>
+        <th><input type="checkbox" [(ngModel)]="isCheckedParent" (change)="checkAllChild()" name="isCheckedParent"/></th>
+        <th>Tiêu đề</th>
+        <th>Mô tả ngắn</th>
+        <th>Nội dung</th>
+        <th>Thể loại</th>
+        <th>Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let newa of news">
+        <td><input type="checkbox" (change)="checkParent(newa, $event)"
+           [(ngModel)]="newa.checked" id="checkboxChild" /></td>
+        <td>{{newa.title}}</td>
+        <td>{{newa.shortDescription}}</td>
+        <td>{{newa.content}}</td>
+        <td>{{newa.categoryName}}</td>
+        <!-- <td><button class="btn btn-success" (click)="updateNew(newa)">Update</button></td>  -->
+        <td>
+          <a class="btn btn-md btn-primary btn-edit" data-toggle="tooltip" title="Cập nhật bài viết"
+            (click)="updateNew(newa)"><i class="fa fa-edit" aria-hidden="true"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="alert alert-danger" *ngIf="errorMsg">
+    {{errorMsg}}
+  </div>
+</div>

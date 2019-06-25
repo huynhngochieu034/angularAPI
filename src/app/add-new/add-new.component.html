@@ -1,0 +1,51 @@
+
+<div class="container-fluid">
+    <h2>Add New Form</h2>
+    <form #userForm="ngForm" (ngSubmit)="onSubmit()" novalidate >
+      {{userForm.value | json}}
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" required #title="ngModel" [class.is-invalid]="title.invalid && title.touched" 
+        class="form-control" name="title" [(ngModel)]="news.title">
+        <small class="text-danger" [class.d-none]="title.valid || title.untouched" >Title is required</small>
+      </div>
+  
+      <div class="form-group">
+        <label>Content</label>
+        <textarea rows="4" cols="50" class="form-control" name="content" [(ngModel)]="news.content"></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label>shortDescription</label>
+        <input type="text" class="form-control" name="shortDescription" [(ngModel)]="news.shortDescription">
+      </div>
+      
+      <div class="form-group">
+        <label>thumbnail</label>
+        <input type="text"  class="form-control" name="thumbnail" [(ngModel)]="news.thumbnail">
+      </div>
+     
+      <div class="form-group">
+        <select (blur)="validateCategory(categoryCode.value)" (change)="validateCategory(categoryCode.value)" 
+         #categoryCode="ngModel" [class.is-invalid]="categoryHasError && categoryCode.touched"
+        class="custom-select" name="categoryCode" [(ngModel)]="news.categoryCode">
+          <option value="">Choose Category</option>
+          <option *ngFor="let category of categorys" value="{{category.code}}">{{ category.name }}</option>
+        </select>
+        
+        <small class="text-danger" [class.d-none]="!categoryHasError || categoryCode.untouched">Please choose a category</small>      
+      </div>
+  
+      <button [disabled]="userForm.form.invalid || categoryHasError " 
+        class="btn btn-primary" type="submit" *ngIf="checked">Add New</button>
+
+        <button [disabled]="userForm.form.invalid || categoryHasError " 
+        class="btn btn-primary" type="submit" *ngIf="!checked">Update New</button>
+  
+    </form>
+    <div class="alert alert-danger" *ngIf="errorMsg">
+      {{errorMsg}}
+    </div>
+    
+      
+  </div>
